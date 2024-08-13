@@ -26,7 +26,7 @@ const News: FC<NewsProps> = ({ item, index }) => {
   };
 
   return (
-    <div className="w-full bg-[#F6F6EF] p-1 flex flex-col">
+    <div className="w-full  p-1 flex flex-col">
       {/* heading */}
       <div className="flex flex-row gap-1">
         <h1 className="text-gray-500 text-sm font-mono">{index + 1}.</h1>

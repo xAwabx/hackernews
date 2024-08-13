@@ -1,4 +1,3 @@
-"use client";
 import News from "@/components/News";
 import { fetchIds, getItem } from "@/lib/fetch";
 import { FC, useEffect, useState } from "react";
@@ -7,9 +6,7 @@ interface pageProps {
   searchParams: { ids: number[] };
 }
 
-const page: FC<pageProps> = ({ searchParams }) => {
-  const [data, setData] = useState<Item[]>();
-
+const page: FC<pageProps> = async ({ searchParams }) => {
   const fetchData = async () => {
     const ids: number[] = searchParams.ids;
     console.log(ids);
@@ -21,20 +18,9 @@ const page: FC<pageProps> = ({ searchParams }) => {
           })
         : [getItem(ids)];
 
-    Promise.all(p)
-      .then((value: Item[]) => {
-        console.log(value);
-        setData(value);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    return await Promise.all(p);
   };
-
-  useEffect(() => {
-    console.log(typeof searchParams.ids);
-    fetchData();
-  }, []);
+  const data = await fetchData();
 
   return (
     <div>

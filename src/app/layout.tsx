@@ -17,8 +17,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex justify-center items-center bg-white">
-          <div className="h-[100vh] w-[85vw] mt-2">
+        <div className="flex justify-center  items-center bg-white">
+          <div className="h-full w-[85vw] bg-[#F6F6EF]  my-2 ">
             {/* navbar */}
             <div className="flex flex-row bg-orange-500 px-2 font-bold text-black font-mono">
               <h1>Hacker News</h1>

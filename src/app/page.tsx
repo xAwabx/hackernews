@@ -1,41 +1,35 @@
-"use client";
-import { useEffect, useState } from "react";
+import More from "@/components/More";
 import News from "@/components/News";
-import Image from "next/image";
-import axios from "axios";
 import { getItem, fetchIds } from "@/lib/fetch";
 
-export default function Home() {
-  const [data, setData] = useState<Item[] | null>(null);
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string };
+}) {
+  const page = searchParams["page"] ?? "1";
+  const page_size = 20;
 
+  const start = (Number(page) - 1) * Number(page_size);
+  const end = start + Number(page_size);
   const fetchData = async () => {
     const ids: number[] = await fetchIds();
-    console.log(ids);
-
-    const p = ids.slice(0, 30)?.map(async (id) => {
+    const p = ids.slice(start, end)?.map(async (id) => {
       return getItem(id);
     });
 
-    Promise.all(p)
-      .then((value: Item[]) => {
-        console.log(value);
-        setData(value);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    return await Promise.all(p);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const data = await fetchData();
 
   return (
     // news
     <div>
       {data?.map((item, i) => {
-        return <News item={item} key={item.id} index={i} />;
+        return <News item={item} key={item.id} index={i + start} />;
       })}
+      <More currentPage={page} />
     </div>
   );
 }
