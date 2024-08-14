@@ -8,10 +8,11 @@ export default async function Home({
   searchParams: { [key: string]: string };
 }) {
   const page = searchParams["page"] ?? "1";
-  const page_size = 20;
+  const page_size = 30;
 
   const start = (Number(page) - 1) * Number(page_size);
   const end = start + Number(page_size);
+
   const fetchData = async () => {
     const ids: number[] = await fetchIds();
     const p = ids.slice(start, end)?.map(async (id) => {

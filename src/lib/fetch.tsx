@@ -3,7 +3,8 @@ import axios from "axios";
 export const getItem = async (id: number) => {
   try {
     const res = await axios.get(
-      `https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`
+      `https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`,
+      {}
     );
     return res.data;
   } catch (error) {

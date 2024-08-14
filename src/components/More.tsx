@@ -10,7 +10,7 @@ const More: FC<MoreProps> = ({ currentPage }) => {
   return (
     <Link
       href={{ pathname: "/", query: { page: Number(currentPage) + 1 } }}
-      className="text-gray-500 text-sm ml-6"
+      className="text-black text-sm ml-6 font-mono"
     >
       More
     </Link>

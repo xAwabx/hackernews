@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FC } from "react";
 import moment from "moment";
+import { formatUrl } from "@/lib/helper";
 
 interface NewsProps {
   item: Item;
@@ -8,22 +9,7 @@ interface NewsProps {
 }
 
 const News: FC<NewsProps> = ({ item, index }) => {
-  const formatUrl = (url: string): string => {
-    try {
-      const urlObj = new URL(url);
-      const domain = urlObj.hostname.replace("www.", "");
-      const path = urlObj.pathname.split("/").filter(Boolean);
-
-      if (path.length === 0) {
-        return domain;
-      }
-
-      return `${domain}/${path[0]}`;
-    } catch (error) {
-      console.error("Invalid URL:", url);
-      return url;
-    }
-  };
+  const formattedUrl = formatUrl(item.url);
 
   return (
     <div className="w-full  p-1 flex flex-col">
@@ -38,15 +24,17 @@ const News: FC<NewsProps> = ({ item, index }) => {
             >
               {item.title}
             </a>
-            <Link
-              href={{
-                pathname: "from",
-                query: { ids: item.descendants },
-              }}
-              className="text-gray-500 text-sm font-mono hover:underline"
-            >
-              ({formatUrl(item.url)})
-            </Link>
+            {item.url && (
+              <Link
+                href={{
+                  pathname: "from",
+                  query: { site: formattedUrl },
+                }}
+                className="text-gray-500 text-sm font-mono hover:underline"
+              >
+                ({formattedUrl})
+              </Link>
+            )}
           </div>
           <div className="flex flex-row text-gray-500 text-xs">
             <h1>
